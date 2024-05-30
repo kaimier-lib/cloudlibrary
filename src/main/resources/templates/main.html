@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>云借阅-图书管理系统</title>
+	<link rel="stylesheet" th:href="@{/css/bootstrap.css}" />
+	<link rel="stylesheet" th:href="@{/css/AdminLTE.css}" />
+	<link rel="stylesheet" th:href="@{/css/_all-skins.min.css}" />
+	<script th:src="@{/js/jquery.min.js}"></script>
+	<script th:src="@{/js/bootstrap.js}"></script>
+	<script type="text/javascript">
+		function SetIFrameHeight() {
+			var iframeid = document.getElementById("iframe");
+			if (document.getElementById) {
+				// 设置内容展示区的高度等于页面可视区的高度
+				iframeid.height = document.documentElement.clientHeight;
+			}
+		}
+	</script>
+</head>
+<body class="hold-transition skin-green sidebar-mini">
+<div class="wrapper">
+	<!-- 页面头部 -->
+	<header class="main-header">
+		<!-- Logo -->
+		<a th:href="@{/admin/main.jsp}" class="logo">
+			<span class="logo-lg"><b>云借阅-图书管理系统</b></span>
+		</a>
+		<!-- 头部导航 -->
+		<nav class="navbar navbar-static-top">
+			<div class="navbar-custom-menu">
+				<ul class="nav navbar-nav">
+					<li class="dropdown user user-menu">
+						<a>
+							<img th:src="@{/img/user.jpg}" class="user-image" alt="User Image">
+							<span class="hidden-xs" th:text="${session.user.name}">用户名</span>
+						</a>
+					</li>
+					<li class="dropdown user user-menu">
+						<a th:href="@{/logout}">
+							<span class="hidden-xs">注销</span>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</nav>
+	</header>
+	<!-- 页面头部 结束 -->
+
+	<!-- 导航侧栏 -->
+	<aside class="main-sidebar">
+		<!-- 侧边栏：样式可以在sidebar.less中找到 -->
+		<section class="sidebar">
+			<!-- 侧边栏菜单：样式可以在sidebar.less中找到 -->
+			<ul class="sidebar-menu">
+				<li>
+					<a th:href="@{/main}">
+						<i class="fa fa-dashboard"></i> <span>首页</span>
+					</a>
+				</li>
+				<li>
+					<a th:href="@{/book/search}" target="iframe">
+						<i class="fa fa-circle-o"></i> 图书借阅
+					</a>
+				</li>
+				<li>
+					<a th:href="@{/book/searchBorrowed}" target="iframe">
+						<i class="fa fa-circle-o"></i> 当前借阅
+					</a>
+				</li>
+				<li>
+					<a th:href="@{/record/searchRecords}" target="iframe">
+						<i class="fa fa-circle-o"></i> 借阅记录
+					</a>
+				</li>
+			</ul>
+		</section>
+		<!-- /.侧边栏 -->
+	</aside>
+	<!-- 导航侧栏 结束 -->
+	<!-- 内容展示区域 -->
+	<div class="content-wrapper">
+		<iframe width="100%" id="iframe" name="iframe" onload="SetIFrameHeight()"
+						frameborder="0" th:src="@{/book/selectNewbooks}"></iframe>
+	</div>
+</div>
+</body>
+</html>
