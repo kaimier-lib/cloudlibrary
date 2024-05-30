@@ -5,8 +5,8 @@
     <groupId>com.ybvtc</groupId>
     <artifactId>cloudlibrary</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>demo07-cloudlibrary</name>
-    <description>demo07-cloudlibrary</description>
+    <name>cloudlibrary</name>
+    <description>cloudlibrary</description>
     <properties>
         <java.version>17</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
