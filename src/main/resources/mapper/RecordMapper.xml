@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ybvtc.mapper.RecordMapper">
+
+    <resultMap id="BaseResultMap" type="com.ybvtc.domain.Record">
+            <id property="id" column="record_id" jdbcType="INTEGER"/>
+            <result property="bookname" column="record_bookname" jdbcType="VARCHAR"/>
+            <result property="bookisbn" column="record_bookisbn" jdbcType="VARCHAR"/>
+            <result property="borrower" column="record_borrower" jdbcType="VARCHAR"/>
+            <result property="borrowtime" column="record_borrowtime" jdbcType="VARCHAR"/>
+            <result property="remandtime" column="record_remandtime" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        record_id,record_bookname,record_bookisbn,
+        record_borrower,record_borrowtime,record_remandtime
+    </sql>
+</mapper>
