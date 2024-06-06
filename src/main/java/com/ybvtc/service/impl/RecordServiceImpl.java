@@ -15,6 +15,11 @@ import org.springframework.stereotype.Service;
 public class RecordServiceImpl extends ServiceImpl<RecordMapper, Record>
     implements RecordService{
 
+    @Override
+    public Record serachRecords(Record inputRecord) {
+
+        return null;
+    }
 }
 
 
