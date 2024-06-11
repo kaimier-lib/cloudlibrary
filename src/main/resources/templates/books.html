@@ -3,13 +3,27 @@
 <head>
 	<meta charset="utf-8">
 	<title>图书管理</title>
-	<link rel="stylesheet" th:href="@{/css/bootstrap.css}">
-	<link rel="stylesheet" th:href="@{/css/AdminLTE.css}">
-	<link rel="stylesheet" th:href="@{/css/pagination.css}">
+	<link rel="stylesheet" th:href="@{/bootstrap/bootstrap.css}">
+<!-- 	<link rel="stylesheet" th:href="@{/css/AdminLTE.css}"> -->
+	<link rel="stylesheet" th:href="@{/css/ks-admin-b.css}">
+
+<!-- 	<script th:src="@{/js/jquery.min.js}"></script> -->
+
+
+	<link rel="stylesheet" th:href="@{/css/ks-global.css}">
+
+	<!-- ddddddddddddddddddddddddddddddddddddddddddd -->
+
+
 	<script th:src="@{/js/jquery.min.js}"></script>
-	<script th:src="@{/js/bootstrap.js}"></script>
-	<script th:src="@{/js/pagination.js}"></script>
+
 	<script th:src="@{/js/my.js}"></script>
+
+	<style>
+		.btn-group .btn {
+			display: inline-block;
+		}
+	</style>
 </head>
 
 <body class="hold-transition skin-red sidebar-mini">
@@ -74,21 +88,39 @@
 				<td th:text="${book.borrower}">借阅人</td>
 				<td th:text="${book.borrowtime}">借阅时间</td>
 				<td th:text="${book.returntime}">预计归还时间</td>
-				<td class="text-center">
-						<button th:if="${book.status == '0'}" type="button" class="btn bg-olive btn-xs" data-toggle="modal"
+				<td >
+					<div class="btn-group">
+						<button th:if="${book.status == '0'}" type="button" class="btn bg-olive btn-sm" data-toggle="modal"
 										data-target="#borrowModal" th:onclick="'findBookById(' + ${book.id} + ', \'borrow\')'">借阅
 						</button>
-						<button th:if="${book.status == '0' and session.user.role == 'ADMIN'}" type="button" class="btn bg-olive btn-xs" data-toggle="modal"
-											data-target="#addOrEditModal" th:onclick="'findBookById(' + ${book.id} + ', \'edit\')'">编辑
+						<button th:if="${book.status == '0' and session.user.role == 'ADMIN'}" type="button" class="btn bg-olive btn-sm" data-toggle="modal"
+										data-target="#addOrEditModal" th:onclick="'findBookById(' + ${book.id} + ', \'edit\')'">编辑
 						</button>
-						<button th:if="${book.status == '1' || book.status == '2'}" type="button" class="btn bg-olive btn-xs" disabled="true">借阅</button>
+						<button th:if="${book.status == '1' || book.status == '2'}" type="button" class="btn bg-olive btn-sm" disabled="true">借阅</button>
+					</div>
+
 				</td>
+
 			</tr>
 			</tbody>
 		</table>
+		<!-- bootstrap分页 -->
+		<nav class="float-end mt-4" aria-label="Page navigation">
+			<ul class="pagination">
+				<li class="page-item" th:classappend="${!pageResult.hasPrevious} ? 'disabled'">
+					<a class="page-link" th:href="@{/book/search(pageNum=${pageResult.current-1},pageSize=${pageResult.size})}">上一页</a>
+				</li>
+				<li class="page-item" th:each="i:${#numbers.sequence(1,pageResult.pages)}" th:classappend="${i==pageResult.current}?'active'">
+					<a class="page-link" th:href="@{/book/search(pageNum=${i},pageSize=${pageSize})}" th:text="${i}">1</a>
+				</li>
+				<li class="page-item" th:classappend="${!pageResult.hasNext} ? 'disabled'">
+					<a class="page-link" th:href="@{/book/search(pageNum=${pageResult.current+1},pageSize=${pageResult.size})}">下一页</a>
+				</li>
+			</ul>
+		</nav>
 		<!-- 数据表格/-->
 		<!-- 分页插件 -->
-		<div id="pagination" class="pagination"></div>
+<!-- 		<div id="pagination" class="pagination"></div> -->
 	</div>
 	<!-- 数据列表/-->
 </div>
@@ -148,23 +180,24 @@
 		</div>
 	</div>
 </div>
-
+<script th:src="@{/bootstrap/bootstrap.bundle.js}"></script>
+<script th:src="@{/js/my.js}"></script>
 </body>
 <script>
-	/* 分页插件展示的总页数 */
-	pageargs.total = Math.ceil('[[${pageResult.total}]]' / pageargs.pagesize);
-	/* 分页插件当前的页码 */
-	pageargs.cur = '[[${pageNum}]]';
-	/* 分页插件页码变化时将跳转到的服务器端的路径 */
-	pageargs.gourl = '[[${gourl}]]';
-	/* 保存搜索框中的搜索条件，页码变化时携带之前的搜索条件 */
-	bookVO.name = '[[${search.name}]]';
-	bookVO.author = '[[${search.author}]]';
-	bookVO.press = '[[${search.press}]]';
-
-	console.log(pageargs);
-	/* 分页效果 */
-	pagination(pageargs);
+	// /* 分页插件展示的总页数 */
+	// pageargs.total = Math.ceil('[[${pageResult.total}]]' / pageargs.pagesize);
+	// /* 分页插件当前的页码 */
+	// pageargs.cur = '[[${pageNum}]]';
+	// /* 分页插件页码变化时将跳转到的服务器端的路径 */
+	// pageargs.gourl = '[[${gourl}]]';
+	// /* 保存搜索框中的搜索条件，页码变化时携带之前的搜索条件 */
+	// bookVO.name = '[[${search.name}]]';
+	// bookVO.author = '[[${search.author}]]';
+	// bookVO.press = '[[${search.press}]]';
+	//
+	// console.log(pageargs);
+	// /* 分页效果 */
+	// pagination(pageargs);
 
 </script>
 </html>

@@ -1,6 +1,8 @@
 package com.ybvtc.service;
 
-import com.ybvtc.domain.User;
+import com.ybvtc.common.Result;
+import com.ybvtc.domain.dto.LoginDTO;
+import com.ybvtc.domain.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -10,5 +12,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface UserService extends IService<User> {
 
-    User getUser(User inputUser);
+    Result<User> validateUser(LoginDTO loginDTO);
 }

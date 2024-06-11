@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ybvtc.mapper.RecordMapper">
 
-    <resultMap id="BaseResultMap" type="com.ybvtc.domain.Record">
+    <resultMap id="BaseResultMap" type="com.ybvtc.domain.entity.Record">
             <id property="id" column="record_id" jdbcType="INTEGER"/>
             <result property="bookname" column="record_bookname" jdbcType="VARCHAR"/>
             <result property="bookisbn" column="record_bookisbn" jdbcType="VARCHAR"/>

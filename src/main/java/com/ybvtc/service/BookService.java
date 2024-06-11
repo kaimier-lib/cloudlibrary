@@ -2,9 +2,9 @@ package com.ybvtc.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.ybvtc.domain.Book;
+import com.ybvtc.domain.entity.Book;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.ybvtc.domain.User;
+import com.ybvtc.domain.entity.User;
 
 /**
 * @author kaimier

@@ -1,15 +1,16 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="zh-CN">
 
 <head>
 	<meta charset="utf-8">
 	<title>借阅记录</title>
+	<!-- 引入bootstrap5 -->
 	<link rel="stylesheet" th:href="@{/css/bootstrap.css}">
 	<link rel="stylesheet" th:href="@{/css/AdminLTE.css}">
-	<link rel="stylesheet" th:href="@{/css/pagination.css}">
+<!-- 	<link rel="stylesheet" th:href="@{/css/pagination.css}"> -->
 	<script th:src="@{/js/jquery.min.js}"></script>
-	<script th:src="@{/js/bootstrap.js}"></script>
-	<script th:src="@{/js/pagination.js}"></script>
+
+
 	<script th:src="@{/js/my.js}"></script>
 </head>
 
@@ -20,12 +21,10 @@
 </div>
 <div class="box-body">
 	<!--工具栏 数据搜索 -->
-	<div class="box-tools pull-right">
+	<div class="box-tools pull-right" th:if="${session.user.role == 'ADMIN'}">
 		<div class="has-feedback">
 			<form th:action="@{/record/searchRecords}" method="post">
-				<div th:if="${session.user.role == 'ADMIN'}">
-					借阅人：<input name="borrower" th:value="${search.borrower}">&nbsp;&nbsp;&nbsp;&nbsp;
-				</div>
+				借阅人：<input name="borrower" th:value="${search.borrower}">&nbsp;&nbsp;&nbsp;&nbsp;
 				图书名称：<input name="bookname" th:value="${search.bookname}">&nbsp;&nbsp;&nbsp;&nbsp;
 				<button class="btn btn-default" type="submit">查询</button>
 			</form>
@@ -50,30 +49,62 @@
 				<td th:text="${record.borrower}"></td>
 				<td th:text="${record.bookname}"></td>
 				<td th:text="${record.bookisbn}"></td>
-				<td th:text="${record.borrowTime}"></td>
-				<td th:text="${record.remandTime}"></td>
+				<td th:text="${record.borrowtime}"></td>
+				<td th:text="${record.remandtime}"></td>
 			</tr>
 			</tbody>
 		</table>
 		<!--数据表格/-->
 		<!--分页插件-->
 		<div id="pagination" class="pagination"></div>
+<!-- 		&lt;!&ndash;bootstrap分页&ndash;&gt; -->
+<!-- 		<nav aria-label="Page navigation"> -->
+<!-- 			<ul class="pagination"> -->
+<!-- 				<li th:if="${pageResult.hasPreviousPage}"><a th:href="@{${gourl}(pageNum=1,pageSize=${pageResult.pageSize},borrower=${recordVO.borrower},bookname=${recordVO.bookname})}">首页</a></li> -->
+<!-- 				<li th:if="${pageResult.hasPreviousPage}"><a th:href="@{${gourl}(pageNum=${pageResult.prePage},pageSize=${pageResult.pageSize},borrower=${recordVO.borrower},bookname=${recordVO.bookname})}">上一页</a></li> -->
+<!-- 				<li th:if="${pageResult.hasNextPage}"><a th:href="@{${gourl}(pageNum=${pageResult.nextPage},pageSize=${pageResult.pageSize},borrower=${recordVO.borrower},bookname=${recordVO.bookname})}">下一页</a></li> -->
+<!-- 				<li th:if="${pageResult.hasNextPage}"><a th:href="@{${gourl}(pageNum=${pageResult.pages},pageSize=${pageResult.pageSize},borrower=${recordVO.borrower},bookname=${recordVO.bookname})}">尾页</a></li> -->
+<!-- 			</ul> -->
+<!-- 		</nav> -->
+				<!--bootstrap分页-->
+<!-- 		<li class="page-item" th:classappend="${!pageResult.hasPrevious} ? 'disabled'"> -->
+		<!-- 		<a class="page-link" th:href="@{/records(pageNum=${pageResult.current - 1}, pageSize=${pageResult.size})}">Previous</a> -->
+
+		<nav class="float-end mt-4" aria-label="分页导航">
+				<ul class="pagination">
+					<li class="page-item" th:classappend="${!pageResult.hasPrevious} ? 'disabled'">
+						<a class="page-link" th:href="@{/record/searchRecords(pageNum=${pageResult.current-1},pageSize=${pageResult.size})}">上一页</a>
+					</li>
+					<li class="page-item" th:each="i:${#numbers.sequence(1,pageResult.pages)}" th:classappend="${i==pageResult.current}?'active'">
+						<a class="page-link" th:href="@{/record/searchRecords(pageNum=${i},pageSize=${pageSize})}" th:text="${i}">1</a>
+					</li>
+					<li class="page-item" th:classappend="${!pageResult.hasNext} ? 'disabled'">
+						<a class="page-link" th:href="@{/record/searchRecords(pageNum=${pageResult.current+1},pageSize=${pageResult.size})}">下一页</a>
+					</li>
+				</ul>
+			</nav>
 	</div>
 	<!-- 数据列表 /-->
+
 </div>
 <!-- /.box-body -->
+<script th:src="@{/bootstrap/bootstrap.bundle.js}"></script>
+<!-- <script th:src="@{/js/pagination.js}"></script> -->
+<!-- <script th:inline="javascript"> -->
+<!-- 	/*分页插件展示的总页数*/ -->
+
+<!-- 	var total = /*[[${pageResult.total}]]*/; -->
+<!-- 	var pagesize = pageargs.pagesize; // 如果 pageargs.pagesize 是固定值，可以直接在这里定义 -->
+<!-- 	pageargs.total = Math.ceil(total / pagesize); -->
+<!-- 	/*分页插件当前的页码*/ -->
+<!-- 	pageargs.cur = /*[[${pageNum}]]*/; -->
+<!-- 	/*分页插件页码变化时将跳转到的服务器端的路径*/ -->
+<!-- 	pageargs.gourl = /*[[${gourl}]]*/; -->
+<!-- 	/*保存搜索框中的搜索条件，页码变化时携带之前的搜索条件*/ -->
+<!-- 	recordVO.bookname = /*[[${search.bookname}]]*/; -->
+<!-- 	recordVO.borrower = /*[[${search.borrower}]]*/; -->
+<!-- 	/*分页效果*/ -->
+<!-- 	pagination(pageargs); -->
+<!-- </script> -->
 </body>
-<script>
-	/*分页插件展示的总页数*/
-	pageargs.total = Math.ceil(/*[[${pageResult.total}]]*/ / pageargs.pagesize);
-	/*分页插件当前的页码*/
-	pageargs.cur = /*[[${pageNum}]]*/
-			/*分页插件页码变化时将跳转到的服务器端的路径*/
-			pageargs.gourl = /*[[${gourl}]]*/
-					/*保存搜索框中的搜索条件，页码变化时携带之前的搜索条件*/
-					recordVO.bookname = /*[[${search.bookname}]]*/
-							recordVO.borrower = /*[[${search.borrower}]]*/
-									/*分页效果*/
-									pagination(pageargs);
-</script>
 </html>

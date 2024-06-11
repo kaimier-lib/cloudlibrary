@@ -1,13 +1,16 @@
 package com.ybvtc.controller;
 
-import com.ybvtc.domain.User;
+import com.ybvtc.common.Result;
+import com.ybvtc.domain.dto.LoginDTO;
+import com.ybvtc.domain.entity.User;
 import com.ybvtc.service.UserService;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class UserController {
@@ -20,13 +23,15 @@ public class UserController {
     }
     // 接收登录表单请求
     @PostMapping("/login")
-    public String login(User inputUser, HttpSession session) {
-        User user=userService.getUser(inputUser);
-        System.out.println(user);
-        if(user!=null){
-            session.setAttribute("user",user);
+    public String login(@Valid LoginDTO loginDTO, HttpSession session,
+                        RedirectAttributes redirectAttributes) {
+        Result<User> result = userService.validateUser(loginDTO);
+        if(result.isSuccess()==true){
+            session.setAttribute("user",result.getData());
             return "redirect:/main";
         }
+
+        redirectAttributes.addFlashAttribute("message",result.getMessage());
         return "redirect:/login";
     }
 
@@ -41,6 +46,4 @@ public class UserController {
         session.removeAttribute("user");
         return "login";
     }
-
-
 }

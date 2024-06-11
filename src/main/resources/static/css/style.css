@@ -1,3 +1,14 @@
+
+/* 全局样式 */
+body {
+	font-size: 14px;
+	color: #4c5258;
+	letter-spacing: .5px;
+	font-family: Roboto, sans-serif;
+	background-color: #f7f8fa;
+	overflow-x: hidden;
+}
+
 /* tab 1*/
 .double {
 	line-height: 58px;
@@ -140,5 +151,6 @@
     border-color: #ccc;
     text-decoration: none
 }
+
 
 

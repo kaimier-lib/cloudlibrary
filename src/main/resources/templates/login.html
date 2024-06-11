@@ -19,7 +19,7 @@
 			</ul>
 			<div class="tab-content tab-wraped">
 				<!--登录提示信息-->
-				<span style="color: red" th:text="${msg}"></span>
+				<span style="color: red" th:text="${message}"></span>
 				<div id="profile" class="tab-pane  active">
 					<form id="loginform" class="sui-form" th:action="@{/login}" method="post">
 						<div class="input-prepend"><span class="add-on loginname">用户名</span>
@@ -38,15 +38,4 @@
 	</div>
 </div>
 </body>
-<script type="text/javascript">
-	/**
-	 * 登录超时 展示区跳出iframe
-	 */
-	var _topWin = window;
-	while (_topWin != _topWin.parent.window) {
-		_topWin = _topWin.parent.window;
-	}
-	if (window != _topWin)
-		_topWin.document.location.href = th:href="@{/admin/login.jsp}";
-</script>
 </html>

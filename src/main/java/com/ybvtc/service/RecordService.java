@@ -1,7 +1,9 @@
 package com.ybvtc.service;
 
-import com.ybvtc.domain.Record;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.ybvtc.domain.entity.Record;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.ybvtc.domain.entity.User;
 
 /**
 * @author kaimier
@@ -10,5 +12,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface RecordService extends IService<Record> {
 
-    Record serachRecords(Record inputRecord);
+    IPage<Record> serachRecords(Record inputRecord, User user, Integer pageNum, Integer pageSize);
 }

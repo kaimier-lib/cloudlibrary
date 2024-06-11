@@ -3,8 +3,8 @@ package com.ybvtc.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ybvtc.common.Result;
-import com.ybvtc.domain.Book;
-import com.ybvtc.domain.User;
+import com.ybvtc.domain.entity.Book;
+import com.ybvtc.domain.entity.User;
 import com.ybvtc.service.BookService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -92,12 +92,7 @@ public class BookController {
                                @RequestParam(value = "pageSize", required = false, defaultValue = "10") Integer pageSize,
                                HttpServletRequest request) {
         System.out.println("kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk");
-//        if (pageNum == null) {
-//            pageNum = 1;
-//        }
-//        if (pageSize == null) {
-//            pageSize = 10;
-//        }
+        User user = (User) request.getSession().getAttribute("user");
         IPage<Book> pageResult = bookService.search(book, pageNum, pageSize);
         System.out.println(pageResult.getTotal());
         ModelAndView modelAndView = new ModelAndView().addObject("pageResult", pageResult);
